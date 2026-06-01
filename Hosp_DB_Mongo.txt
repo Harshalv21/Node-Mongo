@@ -1,0 +1,151 @@
+use Library_DB;
+switched to db Library_DB
+db.createCollection("books")
+MongoServerError[NamespaceExists]: Collection already exists. NS: Library_DB.books
+db.createCollection("book")
+{ ok: 1 }
+db.book.insertMany([
+  {title:"ab",author:"cb",genre:"ma",published_year:2021,avail_copies:21},
+  {title:"na",author:"ka",genre:"la",published_year:2024,avail_copies:30},{}
+])
+{
+  acknowledged: true,
+  insertedIds: {
+    '0': ObjectId('6a1d038d5b5d1d3be81b4356'),
+    '1': ObjectId('6a1d038d5b5d1d3be81b4357'),
+    '2': ObjectId('6a1d038d5b5d1d3be81b4358')
+  }
+}
+db.book.insertMany([
+  {title:"sa",author:"b",genre:"ga",published_year:2026,avail_copies:71},
+  {title:"ta",author:"mna",genre:"la",published_year:2020,avail_copies:50},
+  {title:"mpo",author:"ns",genre:"ha",published_year:2023,avail_copies:91},
+  {title:"opa",author:"gd",genre:"hars",published_year:2024,avail_copies:60}
+])
+{
+  acknowledged: true,
+  insertedIds: {
+    '0': ObjectId('6a1d040b5b5d1d3be81b4359'),
+    '1': ObjectId('6a1d040b5b5d1d3be81b435a'),
+    '2': ObjectId('6a1d040b5b5d1d3be81b435b'),
+    '3': ObjectId('6a1d040b5b5d1d3be81b435c')
+  }
+}
+db.book.find()
+{
+  _id: ObjectId('6a1d038d5b5d1d3be81b4356'),
+  title: 'ab',
+  author: 'cb',
+  genre: 'ma',
+  published_year: 2021,
+  avail_copies: 21
+}
+{
+  _id: ObjectId('6a1d038d5b5d1d3be81b4357'),
+  title: 'na',
+  author: 'ka',
+  genre: 'la',
+  published_year: 2024,
+  avail_copies: 30
+}
+{
+  _id: ObjectId('6a1d038d5b5d1d3be81b4358')
+}
+{
+  _id: ObjectId('6a1d040b5b5d1d3be81b4359'),
+  title: 'sa',
+  author: 'b',
+  genre: 'ga',
+  published_year: 2026,
+  avail_copies: 71
+}
+{
+  _id: ObjectId('6a1d040b5b5d1d3be81b435a'),
+  title: 'ta',
+  author: 'mna',
+  genre: 'la',
+  published_year: 2020,
+  avail_copies: 50
+}
+{
+  _id: ObjectId('6a1d040b5b5d1d3be81b435b'),
+  title: 'mpo',
+  author: 'ns',
+  genre: 'ha',
+  published_year: 2023,
+  avail_copies: 91
+}
+{
+  _id: ObjectId('6a1d040b5b5d1d3be81b435c'),
+  title: 'opa',
+  author: 'gd',
+  genre: 'hars',
+  published_year: 2024,
+  avail_copies: 60
+}
+db.book.find({published_year:{$gt:2022}})
+{
+  _id: ObjectId('6a1d038d5b5d1d3be81b4357'),
+  title: 'na',
+  author: 'ka',
+  genre: 'la',
+  published_year: 2024,
+  avail_copies: 30
+}
+{
+  _id: ObjectId('6a1d040b5b5d1d3be81b4359'),
+  title: 'sa',
+  author: 'b',
+  genre: 'ga',
+  published_year: 2026,
+  avail_copies: 71
+}
+{
+  _id: ObjectId('6a1d040b5b5d1d3be81b435b'),
+  title: 'mpo',
+  author: 'ns',
+  genre: 'ha',
+  published_year: 2023,
+  avail_copies: 91
+}
+{
+  _id: ObjectId('6a1d040b5b5d1d3be81b435c'),
+  title: 'opa',
+  author: 'gd',
+  genre: 'hars',
+  published_year: 2024,
+  avail_copies: 60
+}
+db.book.find({author:"gd"})
+{
+  _id: ObjectId('6a1d040b5b5d1d3be81b435c'),
+  title: 'opa',
+  author: 'gd',
+  genre: 'hars',
+  published_year: 2024,
+  avail_copies: 60
+}
+db.book.updateMany({avail_copies:30},{$inc:{avail_copies:1}})
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 1,
+  modifiedCount: 1,
+  upsertedCount: 0
+}
+db.book.updateMany({avail_copies:0},{$dec:{avail_copies:-1}})
+MongoServerError: Unknown modifier: $dec. Expected a valid update modifier or pipeline-style update specified as an array
+db.book.updateMany({avail_copies:0},{$inc:{avail_copies:-1}})
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 0,
+  modifiedCount: 0,
+  upsertedCount: 0
+}
+db.book.deleteOne({_id: ObjectId('6a1d040b5b5d1d3be81b435b')})
+{
+  acknowledged: true,
+  deletedCount: 1
+}
+db.book.deleteMany({avail_copies:0})
